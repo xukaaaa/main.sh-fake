@@ -360,7 +360,7 @@ abort "! Bạn đã từng sử dụng dùng thử nghiệm
 "
 else
 
-if [ "$(GP id)" == "VH-PLL" ] || [ "$(GP id)" == "VH-KLL" ];then
+if [ "$(GP id)" == "VH-PT" ] || [ "$(GP id)" == "VH-KE" ];then
 abort "! Chỉ có thể dùng thử Module
 
   Thêm Tiếng Việt VH-ZH và gói gapp VH-GA
@@ -405,9 +405,9 @@ driver='$driver'
 Apilt='$Apilt'
 imei='$imei'
 
-thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/$driver/$(echo -n "$Apilt" | base32 -w0)")"
+thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/ares/GE2TSMBZHEZDONZW")"
 if [ "$(echo "$thoigian1" | grep -cm1 "HSD=")" != 1 ];then
-thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/$driver/$(echo -n "$imei" | base32 -w0)")"
+thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/ares/GE2TSMBZHEZDONZW")"
 fi
 
 if [ "$(echo "$thoigian1" | grep -cm1 "HSD=")" == 1 ];then
