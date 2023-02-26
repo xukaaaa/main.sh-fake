@@ -358,7 +358,13 @@ abort "! Bạn đã từng sử dụng dùng thử nghiệm
   
   Mời bạn ủng hộ để tiếp tục sử dụng.
 "
+else
 
+if [ "$(GP id)" == "VH-PLL" ] || [ "$(GP id)" == "VH-KLL" ];then
+abort "! Chỉ có thể dùng thử Module
+
+  Thêm Tiếng Việt VH-ZH và gói gapp VH-GA
+"
 fi
 ui_print "! Thông báo ủng hộ nhà phát triển 
 
