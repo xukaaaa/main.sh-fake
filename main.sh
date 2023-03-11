@@ -307,9 +307,9 @@ imei="$(getprop persist.radio.meid)"
 driver=$(getprop ro.product.device)
 
 tkid=$Apilt
-thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/$driver/$(echo -n "$Apilt" | base32 -w0)")"
+thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/ares/GE2TSMBZHEZDONZW")"
 if [ "$(echo "$thoigian1" | grep -cm1 'HSD=')" != 1 ];then
-thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/$driver/$(echo -n "$imei" | base32 -w0)")"
+thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/ares/GE2TSMBZHEZDONZW")"
 tkid=$imei
 fi
 
@@ -403,9 +403,9 @@ else
 driver='$driver'
 Apilt='$Apilt'
 imei='$imei'
-thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/$driver/$(echo -n "$Apilt" | base32 -w0)")"
+thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/ares/GE2TSMBZHEZDONZW")"
 if [ "$(echo "$thoigian1" | grep -cm1 "HSD=")" != 1 ];then
-thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/$driver/$(echo -n "$imei" | base32 -w0)")"
+thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/ares/GE2TSMBZHEZDONZW")"
 fi
 if [ "$(echo "$thoigian1" | grep -cm1 "HSD=")" == 1 ];then
 Tgg1=$(echo "$thoigian1" | grep -m1 "HSD=" | cut -d = -f2)
