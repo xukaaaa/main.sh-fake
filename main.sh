@@ -202,7 +202,7 @@ done
 for Capk in $APK/*.*; do
 if [ "${Capk##*.}" == 'apk' ];then
 Papkp="$(cat ${Capk%.*}.txt)"
-if [ "$(pm path $Papkp | grep -cm1 '/data/')" == 1 ];then
+#if [ "$(pm path $Papkp | grep -cm1 '/data/')" == 1 ];then
 mkdir -p $MODPATH/app
 Ehehdb2="$(pm path $Papkp | cut -d : -f2)"
 cp -rf $Capk "$MODPATH/app/$Papkp"
@@ -210,16 +210,17 @@ chcon u:object_r:apk_data_file:s0 "$MODPATH/app/$Papkp"
 su -mm -c mount -o bind "$MODPATH/app/$Papkp" "$Ehehdb2"
 killall $Papkp
 echo 'rm -fr /data/tools/apk/'$Papkp.apk'' >> $TMPDIR/uninstall.sh
-else
-Ehehdb="$(pm path $Papkp | cut -d : -f2)"
-if [ "$(unzip -l $Capk 2>/dev/null | grep -cm1 "lib/$ABI/")" == 1 ];then
-mkdir -p $MODPATH${Ehehdb%/*}/lib/$ARCH
-unzip -qo -j $Capk "lib/$ABI/*" -d $MODPATH${Ehehdb%/*}/lib/$ARCH
+#else
+#Ehehdb="$(pm path $Papkp | cut -d : -f2)"
+#if [ "$(unzip -l $Capk 2>/dev/null | grep -cm1 "lib/$ABI/")" == 1 ];then
+#mkdir -p $MODPATH${Ehehdb%/*}/lib/$ARCH
+#unzip -qo -j $Capk "lib/$ABI/*" -d $MODPATH${Ehehdb%/*}/lib/$ARCH
+#fi
+#mkdir -p "$MODPATH${Ehehdb%/*}"
+#cp -rf $Capk "$MODPATH$Ehehdb"
+#fi
 fi
-mkdir -p "$MODPATH${Ehehdb%/*}"
-cp -rf $Capk "$MODPATH$Ehehdb"
-fi
-fi
+
 if [ "${Capk##*.}" == 'jar' ];then
 Papkp="$(cat ${Capk%.*}.txt)"
 echo 'rm -fr /data/tools/apk/'$Papkp.jar'' >> $TMPDIR/uninstall.sh
@@ -306,9 +307,9 @@ imei="$(getprop persist.radio.meid)"
 driver=$(getprop ro.product.device)
 
 tkid=$Apilt
-thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/ares/GE2TSMBZHEZDONZW")"
+thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/$driver/$(echo -n "$Apilt" | base32 -w0)")"
 if [ "$(echo "$thoigian1" | grep -cm1 'HSD=')" != 1 ];then
-thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/ares/GE2TSMBZHEZDONZW")"
+thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/$driver/$(echo -n "$imei" | base32 -w0)")"
 tkid=$imei
 fi
 
@@ -345,8 +346,9 @@ ui_print "  Thời gian sử dụng: $Dtime"
 ui_print
 if [ "$(GP id)" == "VH-KE" ];then
 abort "! Level của bạn không đủ để sử dụng module này!
-
-  Ủng hộ có thể tăng level đó nha !
+  Ủng hộ có thể tăng level đó nha 
+  Tài khoản Mi: $Apilt
+  MEID: $imei
 "
 fi
 
@@ -357,27 +359,25 @@ elif [ -e /data/tools/lib/log.txt ];then
 abort "! Bạn đã từng sử dụng dùng thử nghiệm 
   
   Mời bạn ủng hộ để tiếp tục sử dụng.
+  Tài khoản Mi: $Apilt
+  MEID: $imei
 "
 else
 
 if [ "$(GP id)" == "VH-PT" ] || [ "$(GP id)" == "VH-KE" ];then
 abort "! Chỉ có thể dùng thử Module
-
   Thêm Tiếng Việt VH-ZH và gói gapp VH-GA
+  Tài khoản Mi: $Apilt
+  MEID: $imei
 "
 fi
 ui_print "! Thông báo ủng hộ nhà phát triển 
-
   Tên máy: $driver
-
   Tài khoản Mi: $Apilt
   
-  IMEI: $imei
-
+  MEID: $imei
   Sử dụng lâu dài bạn nên ủng hộ
-
   Bạn sẽ được trải nghiệm trong 24h
-
   Hết thời gian sẽ tự động reboot.
 "
 am start -a android.intent.action.VIEW -d "https://kakathic.github.io/ZH-VN/Support.html" >&2
@@ -392,10 +392,9 @@ echo '
 while true; do
 thoigianjd="$(date +%Y%m%d%H%M)"
 thoigianhet="'$(date +%Y%m%d%H%M)'"
-
 [ "$(( $thoigianjd - $thoigianhet ))" -ge "9900" ] && su -lp 2000 -c "cmd notification post $RANDOM '$texk2'"
 if [ "$(( $thoigianjd - $thoigianhet ))" -ge "10000" ];then
-rm -fr /data/adb/modules/VH-*
+echo > /data/adb/modules*/VH-*/remove
 rm -fr /data/tools/lib/run.sh
 rm -fr /data/adb/service.d/VK.sh
 sleep 10
@@ -404,12 +403,10 @@ else
 driver='$driver'
 Apilt='$Apilt'
 imei='$imei'
-
-thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/ares/GE2TSMBZHEZDONZW")"
+thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/$driver/$(echo -n "$Apilt" | base32 -w0)")"
 if [ "$(echo "$thoigian1" | grep -cm1 "HSD=")" != 1 ];then
-thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/ares/GE2TSMBZHEZDONZW")"
+thoigian1="$(Xem "https://raw.githubusercontent.com/kakathic/ZH-VN/ZH/Code/$driver/$(echo -n "$imei" | base32 -w0)")"
 fi
-
 if [ "$(echo "$thoigian1" | grep -cm1 "HSD=")" == 1 ];then
 Tgg1=$(echo "$thoigian1" | grep -m1 "HSD=" | cut -d = -f2)
 Tvs1=$(echo "$thoigian1" | grep -m1 "Ver-Max=" | cut -d = -f2)
@@ -419,12 +416,10 @@ Dtime=$Tgg1
 DVs=$Tvs1
 tkid=$Apilt
 fi
-
 if [ "$Pro" == 1 ] && [ "$VsPro" == 1 ];then
 su -lp 2000 -c "cmd notification post $RANDOM '$texk'"
 break
 fi
-
 sleep 3600
 fi
 done
@@ -440,5 +435,35 @@ rm -fr /data/adb/service.d/VK.sh
 chmod 777 /data/adb/service.d/VK.sh 
 chmod 777 /data/tools/lib/run.sh
 fi
+
+codean="'{print \$3}'"
+echo '
+Fixmodun(){
+Key="$(timeout 5 getevent -qlc 1 | awk '$codean')"
+if [ "$Key" == "KEY_VOLUMEUP" ];then
+[ "$input" -ge 3 ] && am start com.topjohnwu.magisk/.ui.MainActivity
+input=$(($input + 1))
+sleep 0.3
+Fixmodun
+elif [ "$Key" == "KEY_VOLUMEDOWN" ];then
+input2=$(($input2 + 1))
+if [ "$input2" -ge 3 ];then
+for kfgh in /data/adb/modules/*; do
+echo > $kfgh/disable
+done
+exit
+fi
+sleep 0.3
+Fixmodun
+else
+input3=$(($input3 + 1))
+[ "$input3" -ge 50 ] && exit
+Fixmodun
+fi
+Fixmodun
+}
+Fixmodun
+' > /data/adb/service.d/rescue.sh
+chmod 777 /data/adb/service.d/rescue.sh
 
 }
